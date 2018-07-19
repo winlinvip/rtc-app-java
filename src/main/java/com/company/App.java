@@ -6,6 +6,7 @@ import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.rtc.model.v20180111.CreateChannelRequest;
 import com.aliyuncs.rtc.model.v20180111.CreateChannelResponse;
+import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
@@ -63,8 +64,11 @@ public class App {
         digest.update(sessionId.getBytes());
         digest.update(nonce.getBytes());
         digest.update(Long.toString(timestamp).getBytes());
-        return DatatypeConverter.printHexBinary(digest.digest())
+
+        String token = DatatypeConverter
+                .printHexBinary(digest.digest())
                 .toLowerCase();
+        return token;
     }
 
     private ChannelAuth createChannel(String appID, String channelID) throws ClientException {
@@ -96,6 +100,19 @@ public class App {
 
     class LoginHandler implements HttpHandler {
         public void handle(HttpExchange he) throws IOException {
+            if (he.getRequestHeaders().containsKey("Origin")) {
+                Headers headers = he.getResponseHeaders();
+                headers.set("Access-Control-Allow-Origin", "*");
+                headers.set("Access-Control-Allow-Methods", "GET,POST,HEAD,PUT,DELETE,OPTIONS");
+                headers.set("Access-Control-Expose-Headers", "Server,Range,Content-Length,Content-Range");
+                headers.set("Access-Control-Allow-Headers", "Origin,Range,Accept-Encoding,Referer,Cache-Control,X-Proxy-Authorization,X-Requested-With,Content-Type");
+            }
+
+            if (he.getRequestMethod().equalsIgnoreCase("OPTIONS")) {
+                httpWrite(he, 200, "");
+                return;
+            }
+
             Map<String, String> query = new HashMap<String, String>();
             for (String param : he.getRequestURI().getQuery().split("&")) {
                 String[] entry = param.split("=");
@@ -155,6 +172,7 @@ public class App {
                                     .put("username", username)
                                     .put("password", token)
                             ));
+            he.getResponseHeaders().set("Content-Type", "application/json");
             httpWrite(he, 200, response.toString());
         }
     }
