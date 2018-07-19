@@ -71,8 +71,10 @@ public class App {
         return token;
     }
 
-    private ChannelAuth createChannel(String appID, String channelID) throws ClientException {
-        DefaultProfile profile = DefaultProfile.getProfile(regionID, accessKeyID, accessKeySecret);
+    private ChannelAuth createChannel(String appID, String channelID)
+            throws ClientException {
+        DefaultProfile profile = DefaultProfile
+                .getProfile(regionID, accessKeyID, accessKeySecret);
         IAcsClient client = new DefaultAcsClient(profile);
 
         CreateChannelRequest request = new CreateChannelRequest();

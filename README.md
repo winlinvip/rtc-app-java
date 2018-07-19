@@ -6,6 +6,7 @@ For all languages:
 
 * [Python](https://github.com/winlinvip/rtc-app-python).
 * [Java](https://github.com/winlinvip/rtc-app-java).
+* [Golang](https://github.com/winlinvip/rtc-app-golang).
 
 ## Usage
 
