@@ -8,6 +8,12 @@ For all languages:
 * [Java](https://github.com/winlinvip/rtc-app-java).
 * [Golang](https://github.com/winlinvip/rtc-app-golang).
 * [PHP](https://github.com/winlinvip/rtc-app-php).
+* [C#/.Net](https://github.com/winlinvip/rtc-app-csharp).
+
+For RTC deverloper:
+
+* RTC [workflow](https://help.aliyun.com/document_detail/74889.html).
+* RTC [token generation](https://help.aliyun.com/document_detail/74890.html).
 
 ## Usage
 
