@@ -49,4 +49,5 @@ AppID: iwo5l81k
 
 ## History
 
+* [cb3eb09](https://github.com/winlinvip/rtc-app-java/commit/cb3eb0924d6b97eec13b270bda236b622f88e1a5), Support recover for some OpenAPI error.
 * Support create channel and sign user token.
