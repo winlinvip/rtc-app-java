@@ -46,3 +46,7 @@ AppID: iwo5l81k
 > Remark: You can setup client native SDK by `http://30.2.228.19:8080/app/v1`.
 
 > Remark: Please use your AppServer IP instead by `ifconfig eth0`.
+
+## History
+
+* Support create channel and sign user token.
