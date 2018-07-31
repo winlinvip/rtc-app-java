@@ -52,7 +52,7 @@ public class App {
         public Boolean recovered;
     }
 
-    public static String sign(
+    public static String createToken(
             String appId, String userId, String channelId,
             String channelKey, String nonce, Integer timestamp,
             String sessionId
@@ -191,7 +191,7 @@ public class App {
             userID = UUID.randomUUID().toString();
             session = UUID.randomUUID().toString();
             try {
-                token = sign(appID, userID, channelID, auth.channelKey, auth.nonce, auth.timestamp, session);
+                token = createToken(appID, userID, channelID, auth.channelKey, auth.nonce, auth.timestamp, session);
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
                 httpWrite(he, 500, e.getMessage());
