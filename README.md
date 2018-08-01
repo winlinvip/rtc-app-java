@@ -67,5 +67,6 @@ AppID: iwo5l81k
 
 ## History
 
+* [4c85f2e](https://github.com/winlinvip/rtc-app-java/commit/4c85f2e025c448f1cadd524ee67ddfbf984722b3), Set auto retry and timeout.
 * [cb3eb09](https://github.com/winlinvip/rtc-app-java/commit/cb3eb0924d6b97eec13b270bda236b622f88e1a5), Support recover for some OpenAPI error.
 * Support create channel and sign user token.

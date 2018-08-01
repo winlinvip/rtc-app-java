@@ -31,6 +31,7 @@ public class App {
     private int listen;
     private String appID;
     private String regionID = "cn-hangzhou";
+    private String endpoint = "rtc.aliyuncs.com";
     private String accessKeyID;
     private String accessKeySecret;
     private String gslb;
@@ -112,6 +113,16 @@ public class App {
             CreateChannelRequest request = new CreateChannelRequest();
             request.setAppId(appID);
             request.setChannelId(channelID);
+
+            // Strongly recomment to set the RTC endpoint,
+            // because the exception is not the "right" one if not set.
+            // For example, if access-key-id is invalid:
+            //      1. if endpoint is set, exception is InvalidAccessKeyId.NotFound
+            //      2. if endpoint isn't set, exception is SDK.InvalidRegionId
+            // that's caused by query endpoint failed.
+            // @remark SDk will cache endpoints, however it will query endpoint for the first
+            //      time, so it's good for performance to set the endpoint.
+            request.setEndpoint(endpoint);
 
             client.setAutoRetry(true);
             client.setMaxRetryNumber(3);
