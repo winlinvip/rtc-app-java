@@ -4,6 +4,7 @@ import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
 import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.profile.DefaultProfile;
+import com.aliyuncs.regions.ProductDomain;
 import com.aliyuncs.rtc.model.v20180111.CreateChannelRequest;
 import com.aliyuncs.rtc.model.v20180111.CreateChannelResponse;
 import com.sun.net.httpserver.Headers;
@@ -23,9 +24,7 @@ import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class App {
     // Parsed from CLI.
@@ -108,11 +107,16 @@ public class App {
     private ChannelAuth createChannel(String appID, String channelID) throws ClientException {
         try {
             DefaultProfile profile = DefaultProfile.getProfile(regionID, accessKeyID, accessKeySecret);
-            IAcsClient client = new DefaultAcsClient(profile);
+            DefaultAcsClient client = new DefaultAcsClient(profile);
 
             CreateChannelRequest request = new CreateChannelRequest();
             request.setAppId(appID);
             request.setChannelId(channelID);
+
+            client.setAutoRetry(true);
+            client.setMaxRetryNumber(3);
+            request.setConnectTimeout(2000);
+            request.setReadTimeout(3000);
 
             CreateChannelResponse response = client.getAcsResponse(request);
 
@@ -168,6 +172,7 @@ public class App {
 
             // Create channel if not exists.
             ChannelAuth auth = null;
+            Date starttime = new Date();
             if (!channels.containsKey(channelUrl)) {
                 try {
                     auth = createChannel(appID, channelID);
@@ -183,6 +188,9 @@ public class App {
                     e.printStackTrace();
                     httpWrite(he, 500, e.toString());
                     return;
+                } finally {
+                    long duration = new Date().getTime() - starttime.getTime();
+                    System.out.printf("OpenAPI CreateChannel %d ms\n", duration);
                 }
             } else {
                 auth = channels.get(channelUrl);
