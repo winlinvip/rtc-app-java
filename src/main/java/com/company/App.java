@@ -273,8 +273,8 @@ public class App {
         accessKeyID = cli.getOptionValue("access-key-id");
         accessKeySecret = cli.getOptionValue("access-key-secret");
         gslb = cli.getOptionValue("gslb");
-        System.out.printf("Server listen=%d, appid=%s, akID=%s, akSecret=%s, gslb=%s\n",
-                listen, appID, accessKeyID, accessKeySecret, gslb);
+        System.out.printf("Server listen=%d, appid=%s, akID=%s, akSecret=%s, gslb=%s, region=%s, endpoint=%s\n",
+                listen, appID, accessKeyID, accessKeySecret, gslb, regionID, endpoint);
 
         HttpServer server = HttpServer.create(new InetSocketAddress(listen), 0);
         server.createContext("/app/v1/login", new LoginHandler());
