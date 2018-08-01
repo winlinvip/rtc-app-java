@@ -50,6 +50,7 @@ public class App {
         public Integer timestamp;
         public String channelKey;
         public Boolean recovered;
+        public String requestID;
     }
 
     public static String createToken(
@@ -99,6 +100,7 @@ public class App {
         auth.timestamp = 0;
         auth.channelKey = recover;
         auth.recovered = true;
+        auth.requestID = ex.getRequestId();
 
         System.out.printf("Recover from error:\n");
         ex.printStackTrace();
@@ -138,6 +140,7 @@ public class App {
             auth.timestamp = response.getTimestamp();
             auth.channelKey = response.getChannelKey();
             auth.recovered = false;
+            auth.requestID = response.getRequestId();
 
             return auth;
         } catch (ClientException ex) {
@@ -187,8 +190,8 @@ public class App {
             if (!channels.containsKey(channelUrl)) {
                 try {
                     auth = createChannel(appID, channelID);
-                    System.out.printf("url=%s, nonce=%s, timestamp=%d, channelKey=%s, recovered=%b\n",
-                            channelUrl, auth.nonce, auth.timestamp, auth.channelKey, auth.recovered);
+                    System.out.printf("CreateChannel requestID=%s, cost=%dms, url=%s, nonce=%s, timestamp=%d, channelKey=%s, recovered=%b\n",
+                            auth.requestID, new Date().getTime() - starttime.getTime(), channelUrl, auth.nonce, auth.timestamp, auth.channelKey, auth.recovered);
 
                     // If recovered from error, we should never cache it,
                     // and we should try to request again next time.
@@ -199,9 +202,6 @@ public class App {
                     e.printStackTrace();
                     httpWrite(he, 500, e.toString());
                     return;
-                } finally {
-                    long duration = new Date().getTime() - starttime.getTime();
-                    System.out.printf("OpenAPI CreateChannel %d ms\n", duration);
                 }
             } else {
                 auth = channels.get(channelUrl);
@@ -216,8 +216,8 @@ public class App {
                 httpWrite(he, 500, e.getMessage());
                 return;
             }
-            System.out.printf("user=%s, userID=%s, session=%s, token=%s, channelKey=%s, nonce=%s, timestamp=%d, recovered=%b",
-                    user, userID, session, token, auth.channelKey, auth.nonce, auth.timestamp, auth.recovered);
+            System.out.printf("Sign cost=%dms, user=%s, userID=%s, session=%s, token=%s, channelKey=%s, nonce=%s, timestamp=%d, recovered=%b\n",
+                    new Date().getTime() - starttime.getTime(), user, userID, session, token, auth.channelKey, auth.nonce, auth.timestamp, auth.recovered);
 
             String username = String.format("%s?appid=%s&session=%s&channel=%s&nonce=%s&timestamp=%d",
                     userID, appID, session, channelID, auth.nonce, auth.timestamp);
