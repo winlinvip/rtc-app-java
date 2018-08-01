@@ -3,6 +3,7 @@ package com.company;
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
 import com.aliyuncs.exceptions.ClientException;
+import com.aliyuncs.http.ProtocolType;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.regions.ProductDomain;
 import com.aliyuncs.rtc.model.v20180111.CreateChannelRequest;
@@ -125,6 +126,9 @@ public class App {
             // @remark SDk will cache endpoints, however it will query endpoint for the first
             //      time, so it's good for performance to set the endpoint.
             request.setEndpoint(endpoint);
+
+            // Use HTTP, x3 times faster than HTTPS.
+            request.setProtocol(ProtocolType.HTTP);
 
             client.setAutoRetry(true);
             client.setMaxRetryNumber(3);
