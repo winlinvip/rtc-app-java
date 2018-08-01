@@ -67,6 +67,7 @@ AppID: iwo5l81k
 
 ## History
 
+* [ef62e80](https://github.com/winlinvip/rtc-app-java/commit/ef62e80531a4e65eb2f69fc05822ca22e244a1a1), Log the request id and cost in ms.
 * [8b088f1](https://github.com/winlinvip/rtc-app-java/commit/8b088f1f89bbc1666723656c62a5285d20880077), Set endpoint to get correct exception.
 * [4c85f2e](https://github.com/winlinvip/rtc-app-java/commit/4c85f2e025c448f1cadd524ee67ddfbf984722b3), Set auto retry and timeout.
 * [cb3eb09](https://github.com/winlinvip/rtc-app-java/commit/cb3eb0924d6b97eec13b270bda236b622f88e1a5), Support recover for some OpenAPI error.
