@@ -110,7 +110,8 @@ public class App {
 
     private ChannelAuth createChannel(String appID, String channelID) throws ClientException {
         try {
-            DefaultProfile profile = DefaultProfile.getProfile(regionID, accessKeyID, accessKeySecret);
+            DefaultProfile profile = DefaultProfile.
+                    getProfile(regionID, accessKeyID, accessKeySecret);
             DefaultAcsClient client = new DefaultAcsClient(profile);
 
             CreateChannelRequest request = new CreateChannelRequest();
