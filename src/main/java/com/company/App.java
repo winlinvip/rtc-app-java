@@ -126,7 +126,7 @@ public class App {
             // that's caused by query endpoint failed.
             // @remark SDk will cache endpoints, however it will query endpoint for the first
             //      time, so it's good for performance to set the endpoint.
-            request.setEndpoint(endpoint);
+            DefaultProfile.addEndpoint(regionID, regionID, request.getProduct(), endpoint);
 
             // Use HTTP, x3 times faster than HTTPS.
             request.setProtocol(ProtocolType.HTTP);
