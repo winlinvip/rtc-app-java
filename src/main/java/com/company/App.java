@@ -230,7 +230,8 @@ public class App {
             try {
                 userID = createUserID();
                 session = createSession(appID, channelID, auth.channelKey, userID);
-                token = createToken(appID, userID, channelID, auth.channelKey, auth.nonce, auth.timestamp, session);
+                token = createToken(appID, userID, channelID, auth.channelKey, auth.nonce,
+                        auth.timestamp, session);
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
                 httpWrite(he, 500, e.getMessage());
