@@ -71,6 +71,10 @@ public class App {
         return token;
     }
 
+    public static String createUserID() throws NoSuchAlgorithmException {
+        return UUID.randomUUID().toString();
+    }
+
     public static String createSession(
             String appId, String channelId, String channelKey, String userId
     ) throws NoSuchAlgorithmException {
@@ -224,7 +228,7 @@ public class App {
             }
 
             try {
-                userID = UUID.randomUUID().toString();
+                userID = createUserID();
                 session = createSession(appID, channelID, auth.channelKey, userID);
                 token = createToken(appID, userID, channelID, auth.channelKey, auth.nonce, auth.timestamp, session);
             } catch (NoSuchAlgorithmException e) {
