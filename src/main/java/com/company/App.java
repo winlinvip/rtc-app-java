@@ -55,9 +55,8 @@ public class App {
     }
 
     public static String createToken(
-            String appId, String userId, String channelId,
-            String channelKey, String nonce, Integer timestamp,
-            String sessionId
+            String appId, String userId, String channelId, String channelKey, String nonce,
+            Integer timestamp, String sessionId
     ) throws NoSuchAlgorithmException {
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
         digest.update(channelId.getBytes());
@@ -68,10 +67,22 @@ public class App {
         digest.update(nonce.getBytes());
         digest.update(Long.toString(timestamp).getBytes());
 
-        String token = DatatypeConverter
-                .printHexBinary(digest.digest())
-                .toLowerCase();
+        String token = DatatypeConverter.printHexBinary(digest.digest()).toLowerCase();
         return token;
+    }
+
+    public static String createSession(
+            String appId, String channelId, String channelKey, String userId
+    ) throws NoSuchAlgorithmException {
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        digest.update(appId.getBytes());
+        digest.update(channelId.getBytes());
+        digest.update(channelKey.getBytes());
+        digest.update(userId.getBytes());
+        digest.update(new Date().toString().getBytes());
+
+        String session = DatatypeConverter.printHexBinary(digest.digest()).toLowerCase();
+        return session;
     }
 
     private ChannelAuth recoverForError(ClientException ex, String appID, String channelID)
@@ -212,9 +223,9 @@ public class App {
                 auth = channels.get(channelUrl);
             }
 
-            userID = UUID.randomUUID().toString();
-            session = UUID.randomUUID().toString();
             try {
+                userID = UUID.randomUUID().toString();
+                session = createSession(appID, channelID, auth.channelKey, userID);
                 token = createToken(appID, userID, channelID, auth.channelKey, auth.nonce, auth.timestamp, session);
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();

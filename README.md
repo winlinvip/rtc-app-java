@@ -67,6 +67,7 @@ AppID: iwo5l81k
 
 ## History
 
+* [](), Update SessionID generation algorithm.
 * [b68830b](https://github.com/winlinvip/rtc-app-java/commit/b68830b794613bd29ac403596df2745ff4af3b66), Use HTTP, x3 times faster than HTTPS.
 * [ef62e80](https://github.com/winlinvip/rtc-app-java/commit/ef62e80531a4e65eb2f69fc05822ca22e244a1a1), Log the request id and cost in ms.
 * [8b088f1](https://github.com/winlinvip/rtc-app-java/commit/8b088f1f89bbc1666723656c62a5285d20880077), [e726b19](https://github.com/winlinvip/rtc-app-java/commit/e726b19f53fb85308e0166676779efb32e655db5), Set endpoint to get correct exception.
