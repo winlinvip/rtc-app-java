@@ -56,14 +56,14 @@ public class App {
 
     public static String createToken(
             String appId, String userId, String channelId, String channelKey, String nonce,
-            Integer timestamp, String sessionId
+            Integer timestamp, String session
     ) throws NoSuchAlgorithmException {
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
         digest.update(channelId.getBytes());
         digest.update(channelKey.getBytes());
         digest.update(appId.getBytes());
         digest.update(userId.getBytes());
-        digest.update(sessionId.getBytes());
+        digest.update(session.getBytes());
         digest.update(nonce.getBytes());
         digest.update(Long.toString(timestamp).getBytes());
 
